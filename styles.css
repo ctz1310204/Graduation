@@ -25,7 +25,10 @@ html { scroll-behavior:smooth; }
 
 body {
     font-family: var(--body);
-    background: var(--bg);
+    background: 
+        linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+        var(--bg);
+    background-size: 80px 100%;
     color: var(--fg);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -432,9 +435,27 @@ h1 { margin-bottom:24px; }
 /* ========================================
    RSVP
    ======================================== */
+#rsvp {
+    position: relative;
+    overflow: hidden;
+}
+
+#rsvp::before {
+    content: ""; position: absolute;
+    bottom: -15%; right: -15%; width: 45%; height: 55%;
+    background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+    pointer-events: none; filter: blur(80px);
+    z-index: 0;
+}
+
+#rsvp .wrap {
+    position: relative;
+    z-index: 2;
+}
+
 .rsvp-title {
     font-family:var(--display);
-    font-size:clamp(2.8rem, 7vw, 5rem);
+    font-size:clamp(3.2rem, 8.5vw, 6.2rem);
     font-weight:900;
     text-transform:uppercase;
     letter-spacing:-.04em;
@@ -444,25 +465,25 @@ h1 { margin-bottom:24px; }
 
 .rsvp-form { max-width:480px; }
 
-.field { margin-bottom:28px; }
+.field { margin-bottom:32px; }
 
 .field label:not(.pill) {
     display:block;
     font-family:var(--display);
-    font-size:.62rem; font-weight:600;
+    font-size:.65rem; font-weight:600;
     letter-spacing:.16em; text-transform:uppercase;
     color:var(--muted);
-    margin-bottom:10px;
+    margin-bottom:12px;
 }
 
 .field input[type="text"],
 .field input[type="tel"],
 .field input[type="number"] {
-    width:100%; padding:14px 0;
+    width:100%; padding:18px 0;
     background:transparent; border:none;
     border-bottom:1px solid var(--dim);
     color:var(--fg); font-family:var(--body);
-    font-size:1rem; outline:none;
+    font-size:1.25rem; outline:none;
     transition:border-color .3s;
 }
 
@@ -475,18 +496,18 @@ h1 { margin-bottom:24px; }
 }
 
 /* PILLS */
-.pills { display:flex; gap:8px; }
+.pills { display:flex; gap:10px; }
 
 .pill { cursor:pointer; position:relative; }
 .pill input { position:absolute; opacity:0; pointer-events:none; }
 
 .pill span {
     display:inline-block;
-    padding:11px 22px;
+    padding:13px 28px;
     border:1px solid var(--dim);
     border-radius:2px;
     font-family:var(--display);
-    font-size:.72rem; font-weight:600;
+    font-size:0.78rem; font-weight:600;
     letter-spacing:.08em; text-transform:uppercase;
     color:var(--muted);
     transition:all .25s ease;
@@ -500,11 +521,11 @@ h1 { margin-bottom:24px; }
 /* SUBMIT */
 .btn {
     margin-top:8px;
-    padding:16px 44px;
+    padding:18px 52px;
     background:var(--gold);
     color:#0a0a0a;
     font-family:var(--display);
-    font-size:.78rem; font-weight:700;
+    font-size:0.82rem; font-weight:700;
     letter-spacing:.1em;
     text-transform:uppercase;
     border-radius:2px;
