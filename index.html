@@ -147,52 +147,61 @@
         </div>
     </section>
 
-    <!-- ===== RSVP ===== -->
     <section class="section" id="rsvp">
-        <div class="wrap narrow">
+        <div class="wrap">
             <p class="section-tag">Xác nhận</p>
-            <h3 class="rsvp-title reveal">Bạn sẽ<br>đến chứ?</h3>
+            <div class="rsvp-grid">
+                <div class="rsvp-left">
+                    <h3 class="rsvp-title reveal">Bạn sẽ<br>đến chứ?</h3>
 
-            <form id="rsvp-form" class="rsvp-form reveal" autocomplete="off">
-                <div class="field">
-                    <label for="guest-name">Họ và tên</label>
-                    <input type="text" id="guest-name" name="name" placeholder="Nhập tên..." required>
-                </div>
-                <div class="field">
-                    <label>Tham dự</label>
-                    <div class="pills">
-                        <label class="pill" for="att-y">
-                            <input type="radio" id="att-y" name="attendance" value="Có" required>
-                            <span>Tôi sẽ đến</span>
-                        </label>
-                        <label class="pill" for="att-n">
-                            <input type="radio" id="att-n" name="attendance" value="Không">
-                            <span>Rất tiếc</span>
-                        </label>
+                    <form id="rsvp-form" class="rsvp-form reveal" autocomplete="off">
+                        <div class="field">
+                            <label for="guest-name">Họ và tên</label>
+                            <input type="text" id="guest-name" name="name" placeholder="Nhập tên..." required>
+                        </div>
+                        <div class="field">
+                            <label>Tham dự</label>
+                            <div class="pills">
+                                <label class="pill" for="att-y">
+                                    <input type="radio" id="att-y" name="attendance" value="Có" required>
+                                    <span>Tôi sẽ đến</span>
+                                </label>
+                                <label class="pill" for="att-n">
+                                    <input type="radio" id="att-n" name="attendance" value="Không">
+                                    <span>Rất tiếc</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="guest-message">Lời nhắn (nếu có)</label>
+                            <input type="text" id="guest-message" name="message" placeholder="Gửi lời chúc đến Vũ...">
+                        </div>
+                        <div class="rsvp-actions">
+                            <button type="submit" class="btn" id="submit-btn">
+                                <span class="btn-txt">Gửi →</span>
+                                <span class="btn-load"><span class="spinner"></span></span>
+                                <span class="btn-ok">✓ Đã gửi</span>
+                            </button>
+                            <button type="button" class="btn-share" id="share-btn">Share invitation ↗</button>
+                        </div>
+                    </form>
+
+                    <div id="res-ok" class="res" style="display:none">
+                        <h4>Cảm ơn!</h4>
+                        <p id="res-msg">Hẹn gặp bạn tại buổi lễ.</p>
+                    </div>
+                    <div id="res-err" class="res err" style="display:none">
+                        <h4>Lỗi</h4>
+                        <p>Vui lòng thử lại.</p>
+                        <button onclick="resetForm()" class="btn-retry">Thử lại</button>
                     </div>
                 </div>
-                <div class="field">
-                    <label for="guest-message">Lời nhắn (nếu có)</label>
-                    <input type="text" id="guest-message" name="message" placeholder="Gửi lời chúc đến Vũ...">
+                <div class="rsvp-right reveal">
+                    <div class="rsvp-map-container">
+                        <img src="picture/map.png" alt="Bản đồ UET" class="rsvp-map-img">
+                        <span class="rsvp-map-label">Sơ đồ vị trí Hội trường Nguyễn Văn Đạo</span>
+                    </div>
                 </div>
-                <div class="rsvp-actions">
-                    <button type="submit" class="btn" id="submit-btn">
-                        <span class="btn-txt">Gửi →</span>
-                        <span class="btn-load"><span class="spinner"></span></span>
-                        <span class="btn-ok">✓ Đã gửi</span>
-                    </button>
-                    <button type="button" class="btn-share" id="share-btn">Share invitation ↗</button>
-                </div>
-            </form>
-
-            <div id="res-ok" class="res" style="display:none">
-                <h4>Cảm ơn!</h4>
-                <p id="res-msg">Hẹn gặp bạn tại buổi lễ.</p>
-            </div>
-            <div id="res-err" class="res err" style="display:none">
-                <h4>Lỗi</h4>
-                <p>Vui lòng thử lại.</p>
-                <button onclick="resetForm()" class="btn-retry">Thử lại</button>
             </div>
         </div>
     </section>
