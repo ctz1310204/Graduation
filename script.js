@@ -64,25 +64,6 @@ function tick() {
 tick();
 setInterval(tick, 1000);
 
-/* ---- Show/hide guests field ---- */
-(function initGuestsToggle() {
-    const guestsField = $('#guests-field');
-    if (!guestsField) return;
-
-    $$('input[name="attendance"]').forEach(radio => {
-        radio.addEventListener('change', e => {
-            if (e.target.value === 'Có') {
-                guestsField.style.display = 'block';
-                $('#guest-count').setAttribute('required', '');
-            } else {
-                guestsField.style.display = 'none';
-                $('#guest-count').removeAttribute('required');
-                $('#guest-count').value = '0';
-            }
-        });
-    });
-})();
-
 /* ---- RSVP ---- */
 (function initRSVP() {
     const form = $('#rsvp-form');
@@ -93,17 +74,9 @@ setInterval(tick, 1000);
         e.preventDefault();
         const name = $('#guest-name').value.trim();
         const att = form.querySelector('input[name="attendance"]:checked');
-        const phone = $('#guest-phone').value.trim();
 
         if (!name) { toast('Nhập tên của bạn'); return; }
         if (!att) { toast('Chọn xác nhận tham dự'); return; }
-        if (!phone) { toast('Nhập số điện thoại'); return; }
-
-        const phoneClean = phone.replace(/\s/g, '');
-        if (!/^(0|\+84)\d{9,10}$/.test(phoneClean)) {
-            toast('Số điện thoại không hợp lệ');
-            return;
-        }
 
         btn.classList.add('loading');
         btn.disabled = true;
@@ -112,8 +85,6 @@ setInterval(tick, 1000);
             const data = {
                 name,
                 attendance: att.value,
-                guests: att.value === 'Có' ? parseInt($('#guest-count').value) || 0 : 0,
-                phone: phoneClean,
                 timestamp: new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
             };
 
@@ -151,12 +122,36 @@ setInterval(tick, 1000);
     });
 })();
 
+/* ---- Share Invitation ---- */
+(function initShare() {
+    const shareBtn = $('#share-btn');
+    if (!shareBtn) return;
+
+    shareBtn.addEventListener('click', async () => {
+        const shareData = {
+            title: 'Graduation | Chu Tâm Vũ',
+            text: 'Trân trọng mời bạn đến chung vui trong ngày tốt nghiệp của Chu Tâm Vũ.',
+            url: window.location.origin + window.location.pathname
+        };
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                await navigator.clipboard.writeText(shareData.url);
+                toast('Đã sao chép link liên kết!');
+            }
+        } catch (err) {
+            console.log('Chia sẻ thất bại hoặc bị hủy:', err);
+        }
+    });
+})();
+
 window.resetForm = () => {
     const f = $('#rsvp-form'), b = $('#submit-btn');
     if (!f) return;
     f.reset(); f.style.display = 'block';
     b.classList.remove('loading', 'done'); b.disabled = false;
-    $('#guests-field').style.display = 'none';
     $('#res-ok').style.display = 'none';
     $('#res-err').style.display = 'none';
 };

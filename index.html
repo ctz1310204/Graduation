@@ -169,28 +169,22 @@
                     <div class="pills">
                         <label class="pill" for="att-y">
                             <input type="radio" id="att-y" name="attendance" value="Có" required>
-                            <span>Tôi sẽ đến 🎉</span>
+                            <span>Tôi sẽ đến</span>
                         </label>
                         <label class="pill" for="att-n">
                             <input type="radio" id="att-n" name="attendance" value="Không">
-                            <span>Rất tiếc 😢</span>
+                            <span>Rất tiếc</span>
                         </label>
                     </div>
                 </div>
-                <div class="field" id="guests-field" style="display:none">
-                    <label for="guest-count">Số người đi cùng</label>
-                    <input type="number" id="guest-count" name="guests" min="0" max="10" value="0" placeholder="0">
-                    <small>Không tính bạn. Nếu đi 1 mình thì nhập 0.</small>
+                <div class="rsvp-actions">
+                    <button type="submit" class="btn" id="submit-btn">
+                        <span class="btn-txt">Gửi →</span>
+                        <span class="btn-load"><span class="spinner"></span></span>
+                        <span class="btn-ok">✓ Đã gửi</span>
+                    </button>
+                    <button type="button" class="btn-share" id="share-btn">Share invitation ↗</button>
                 </div>
-                <div class="field">
-                    <label for="guest-phone">Số điện thoại</label>
-                    <input type="tel" id="guest-phone" name="phone" placeholder="0912 345 678" required>
-                </div>
-                <button type="submit" class="btn" id="submit-btn">
-                    <span class="btn-txt">Gửi xác nhận →</span>
-                    <span class="btn-load"><span class="spinner"></span></span>
-                    <span class="btn-ok">✓ Đã gửi</span>
-                </button>
             </form>
 
             <div id="res-ok" class="res" style="display:none">
