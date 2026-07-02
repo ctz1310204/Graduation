@@ -128,21 +128,20 @@ setInterval(tick, 1000);
     if (!shareBtn) return;
 
     shareBtn.addEventListener('click', async () => {
-        const shareData = {
-            title: 'Graduation | Chu Tâm Vũ',
-            text: 'Trân trọng mời bạn đến chung vui trong ngày tốt nghiệp của Chu Tâm Vũ.',
-            url: window.location.origin + window.location.pathname
-        };
+        const shareUrl = window.location.origin + window.location.pathname;
 
         try {
-            if (navigator.share) {
-                await navigator.share(shareData);
-            } else {
-                await navigator.clipboard.writeText(shareData.url);
-                toast('Đã sao chép link liên kết!');
-            }
+            await navigator.clipboard.writeText(shareUrl);
+            toast('Đã sao chép link liên kết!');
         } catch (err) {
-            console.log('Chia sẻ thất bại hoặc bị hủy:', err);
+            // Fallback for older browsers or non-HTTPS local environments
+            const input = document.createElement('input');
+            input.value = shareUrl;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            toast('Đã sao chép link liên kết!');
         }
     });
 })();
