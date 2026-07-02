@@ -33,13 +33,15 @@ function doPost(e) {
     var timestamp = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
     var name = data.name || "";
     var attendance = data.attendance || "";
+    var message = data.message || "";
     
     // Ghi dữ liệu vào hàng tiếp theo trong Sheet
-    // Thứ tự cột: Thời gian gửi | Họ và tên | Tham dự
+    // Thứ tự cột: Thời gian gửi | Họ và tên | Tham dự | Lời nhắn
     sheet.appendRow([
       timestamp, 
       name, 
-      attendance
+      attendance,
+      message
     ]);
     
     // Trả về kết quả JSON thành công

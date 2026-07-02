@@ -74,6 +74,7 @@ setInterval(tick, 1000);
         e.preventDefault();
         const name = $('#guest-name').value.trim();
         const att = form.querySelector('input[name="attendance"]:checked');
+        const message = $('#guest-message').value.trim();
 
         if (!name) { toast('Nhập tên của bạn'); return; }
         if (!att) { toast('Chọn xác nhận tham dự'); return; }
@@ -85,6 +86,7 @@ setInterval(tick, 1000);
             const data = {
                 name,
                 attendance: att.value,
+                message,
                 timestamp: new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
             };
 
