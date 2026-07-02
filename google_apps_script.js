@@ -1,5 +1,5 @@
 /**
- * Google Apps Script - RSVP API Backend
+ * Google Apps Script - RSVP API Backend (Rút gọn)
  * 
  * Hướng dẫn sử dụng:
  * 1. Mở trang Google Sheet của bạn.
@@ -8,9 +8,12 @@
  * 4. Nhấn Lưu (Save - biểu tượng đĩa mềm).
  * 5. Nhấn Triển khai (Deploy) -> Triển khai mới (New deployment).
  *    - Chọn loại: Ứng dụng web (Web app).
+ *    - Mô tả: RSVP Handler
  *    - Thực thi dưới dạng: Tôi (Me).
  *    - Ai có quyền truy cập: Mọi người (Anyone).
- * 6. Sao chép URL ứng dụng web được cấp và dán vào file `app.js` của bạn.
+ * 6. Bấm Triển khai, cấp quyền truy cập Google Drive/Google Sheets khi được hỏi.
+ * 7. Sao chép URL ứng dụng web được cấp (dạng https://script.google.com/macros/s/.../exec).
+ * 8. Dán URL đó vào biến SCRIPT_URL ở dòng 9 của file `script.js` của bạn.
  */
 
 function doPost(e) {
@@ -18,7 +21,7 @@ function doPost(e) {
     var doc = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = doc.getActiveSheet();
     
-    // Đọc dữ liệu gửi lên (Hỗ trợ cả JSON và Form URL-Encoded)
+    // Đọc dữ liệu gửi lên
     var data = {};
     if (e.postData && e.postData.type === "application/json") {
       data = JSON.parse(e.postData.contents);
@@ -26,23 +29,17 @@ function doPost(e) {
       data = e.parameter;
     }
     
-    // Chuẩn bị các dòng dữ liệu để ghi
-    var timestamp = new Date();
+    // Chuẩn bị dữ liệu ghi nhận
+    var timestamp = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
     var name = data.name || "";
-    var status = data.status || "";
-    var phone = data.phone || "";
-    var guests = data.guests || "0";
-    var message = data.message || "";
+    var attendance = data.attendance || "";
     
     // Ghi dữ liệu vào hàng tiếp theo trong Sheet
-    // Thứ tự cột: Thời gian | Họ tên | Trạng thái | Số điện thoại | Số người đi cùng | Lời nhắn
+    // Thứ tự cột: Thời gian gửi | Họ và tên | Tham dự
     sheet.appendRow([
       timestamp, 
       name, 
-      status, 
-      phone, 
-      guests, 
-      message
+      attendance
     ]);
     
     // Trả về kết quả JSON thành công
