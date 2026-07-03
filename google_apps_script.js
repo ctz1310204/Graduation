@@ -21,10 +21,14 @@ function doPost(e) {
     var doc = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = doc.getActiveSheet();
     
-    // Đọc dữ liệu gửi lên
+    // Đọc dữ liệu gửi lên (Hỗ trợ parse JSON ngay cả khi content-type bị trình duyệt đổi thành text/plain)
     var data = {};
-    if (e.postData && e.postData.type === "application/json") {
-      data = JSON.parse(e.postData.contents);
+    if (e.postData && e.postData.contents) {
+      try {
+        data = JSON.parse(e.postData.contents);
+      } catch (err) {
+        data = e.parameter;
+      }
     } else {
       data = e.parameter;
     }
