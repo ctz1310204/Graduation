@@ -70,11 +70,11 @@ setInterval(tick, 1000);
     const btn = $('#submit-btn');
     if (!form) return;
 
-    form.addEventListener('submit', async e => {
+    form.addEventListener('submit', e => {
         e.preventDefault();
         const name = $('#guest-name').value.trim();
         const att = form.querySelector('input[name="attendance"]:checked');
-        const message = $('#guest-message').value.trim();
+        const message = $('#guest-message') ? $('#guest-message').value.trim() : '';
 
         if (!name) { toast('Nhập tên của bạn'); return; }
         if (!att) { toast('Chọn xác nhận tham dự'); return; }
@@ -82,23 +82,43 @@ setInterval(tick, 1000);
         btn.classList.add('loading');
         btn.disabled = true;
 
-        try {
-            if (SCRIPT_URL) {
-                const formData = new URLSearchParams();
-                formData.append('name', name);
-                formData.append('attendance', att.value);
-                formData.append('message', message);
+        if (SCRIPT_URL) {
+            // Tạo iframe ẩn để submit form mà không reload trang
+            const iframeName = 'rsvp_iframe_' + Date.now();
+            const iframe = document.createElement('iframe');
+            iframe.name = iframeName;
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
 
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: formData
-                });
-            } else {
-                await new Promise(r => setTimeout(r, 900));
-                console.log('📋 RSVP (demo):', data);
+            // Tạo form ẩn trỏ vào iframe
+            const hiddenForm = document.createElement('form');
+            hiddenForm.method = 'POST';
+            hiddenForm.action = SCRIPT_URL;
+            hiddenForm.target = iframeName;
+            hiddenForm.style.display = 'none';
+
+            // Thêm các trường dữ liệu
+            const fields = { name, attendance: att.value, message };
+            for (const [key, val] of Object.entries(fields)) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = val;
+                hiddenForm.appendChild(input);
             }
 
+            document.body.appendChild(hiddenForm);
+            hiddenForm.submit();
+
+            // Dọn dẹp sau 3 giây
+            setTimeout(() => {
+                hiddenForm.remove();
+                iframe.remove();
+            }, 3000);
+        }
+
+        // Hiển thị kết quả thành công
+        setTimeout(() => {
             btn.classList.remove('loading');
             btn.classList.add('done');
 
@@ -111,13 +131,7 @@ setInterval(tick, 1000);
                 $('#res-ok').style.display = 'block';
                 toast('Đã gửi xác nhận!');
             }, 400);
-        } catch (err) {
-            console.error(err);
-            btn.classList.remove('loading');
-            btn.disabled = false;
-            form.style.display = 'none';
-            $('#res-err').style.display = 'block';
-        }
+        }, 1000);
     });
 })();
 
