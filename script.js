@@ -7,7 +7,7 @@ const $ = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
 // 🔧 Thay URL này bằng URL Google Apps Script Web App của bạn
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwE1wWtGb9q7UblRTgN36GOjx2wiv-uebcd9CfiIwDwC0rW2K9F4wttbd3MJfDeyeGM/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxMElc6jhqc9UCpVSK4Jwg0RUNGmJLhm98uyysSgk8iZY0boHzdDZ6JotZmTOO2y1Hk/exec';
 const EVENT = new Date('2026-07-05T10:00:00+07:00');
 
 /* ---- Toast ---- */
