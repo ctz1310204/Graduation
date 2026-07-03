@@ -83,19 +83,16 @@ setInterval(tick, 1000);
         btn.disabled = true;
 
         try {
-            const data = {
-                name,
-                attendance: att.value,
-                message,
-                timestamp: new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })
-            };
-
             if (SCRIPT_URL) {
+                const formData = new URLSearchParams();
+                formData.append('name', name);
+                formData.append('attendance', att.value);
+                formData.append('message', message);
+
                 await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    body: formData
                 });
             } else {
                 await new Promise(r => setTimeout(r, 900));

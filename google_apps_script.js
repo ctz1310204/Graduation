@@ -21,17 +21,8 @@ function doPost(e) {
     var doc = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = doc.getActiveSheet();
     
-    // Đọc dữ liệu gửi lên (Hỗ trợ parse JSON ngay cả khi content-type bị trình duyệt đổi thành text/plain)
-    var data = {};
-    if (e.postData && e.postData.contents) {
-      try {
-        data = JSON.parse(e.postData.contents);
-      } catch (err) {
-        data = e.parameter;
-      }
-    } else {
-      data = e.parameter;
-    }
+    // Đọc dữ liệu từ form (frontend gửi dạng URL-encoded, dữ liệu tự động có trong e.parameter)
+    var data = e.parameter;
     
     // Chuẩn bị dữ liệu ghi nhận
     var timestamp = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
